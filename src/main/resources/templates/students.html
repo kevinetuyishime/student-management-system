@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Students</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="container wide">
+
+    <h1>Registered Students</h1>
+    <p>List of all students registered in the system.</p>
+
+    <div class="error"
+         th:if="${errorMessage}"
+         th:text="${errorMessage}">
+    </div>
+
+    <div th:if="${not #lists.isEmpty(students)}">
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="student : ${students}">
+                <td th:text="${student.id}"></td>
+                <td th:text="${student.firstName}"></td>
+                <td th:text="${student.lastName}"></td>
+                <td th:text="${student.email}"></td>
+                <td th:text="${student.age}"></td>
+                <td>
+                    <a th:href="@{/student/{id}(id=${student.id})}">
+                        View
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div th:if="${#lists.isEmpty(students)}">
+        <p>No students have been registered yet.</p>
+    </div>
+
+    <a th:href="@{/student/register}">Register New Student</a>
+
+</div>
+
+</body>
+</html>
